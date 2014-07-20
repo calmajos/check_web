@@ -1,6 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+<script type="text/javascript">
+	
+	var hovID;
+	var hovS;
+	var x;
+	var y;
+	
+	function m_d_tooltip(evt,id) {
+		hovS = id;
+		x = evt.pageX;
+		y = evt.pageY;
+		hovID = setTimeout(function () {
+			var ele = document.getElementById(hovS);
+			ele.style.top = (y+25) + "px";
+			ele.style.left = (x-65)+ "px";
+			ele.style.display = "block"
+		}
+		,750);
+	}
+		
+	function hide() {
+		var ele = document.getElementById(hovS);
+		ele.style.display = "none"
+		clearTimeout(hovID)
+	}
+	
+	function confirm_delete() {
+		if(confirm("Are you sure you want to delete?")){
+			alert("Deleted");
+			
+		}
+		
+		return false;
+	}
+		
+    function rate(){
+        document.getElementsByClassName('rate').innerHTML = "Clicked";
+    }
+
+
+</script>
+
+
     <meta charset="UTF-8">
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -31,18 +74,24 @@
                         <li><a href="#">Games</a></li>
                         <li><a href="#">Politics</a></li>
                         <li><a href="#">Sports</a></li>
+                        <li><a href="#">GIF</a></li>
+                        <li><a href="#">Cute</a></li>
+                        <li><a href="#">Geeky</a></li>
+
                     </ul>
                 </li>
-                <form class="navbar-form navbar-right pull-right">
-                    <input type="text" class="form-control" placeholder="Search..." size="50">
-                </form>
+                <li id="search">
+                    <form class="navbar-form navbar-right pull-right">
+                         <input type="text" class="form-control" placeholder="Search..." size="50">
+                     </form>
+                </li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
 </div>
 
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal custom fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -56,17 +105,25 @@
                     <input id="comments" type="text" class="form-control" placeholder="Comments">
                     <input type="text" class="form-control" placeholder="Tags">
                 </div>
-                <b>Ratings:</b>
+                <br>
+                <h4>&nbsp;Rate It:</h4>
+                <div class="modal-rating pull-left">
+                    <span>☆</span>
+                    <span>☆</span>
+                    <span>☆</span>
+                    <span>☆</span>
+                    <span>☆</span>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default submit"><b>Submit</b></button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal custom fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -74,7 +131,8 @@
                 <h4 class="modal-title">Create a Meme</h4>
             </div>
             <div class="modal-body">
-                <b>Upload Image:</b>
+                <h4>Upload Image:</h4>
+                <br>
                 <div class="input-group">
                     <input type="file" class="form-control">
                     <img id="preview" src="http://placehold.it/320x150" alt="">
@@ -83,11 +141,19 @@
                     <input type="text" class="form-control" placeholder="Top Text">
                     <input type="text" class="form-control" placeholder="Bottom Text">
                 </div>
-                <b>Ratings:</b>
+                <br>
+                <h4>&nbsp;Rate It:</h4>
+                <div class="modal-rating pull-left">
+                    <span>☆</span>
+                    <span>☆</span>
+                    <span>☆</span>
+                    <span>☆</span>
+                    <span>☆</span>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default submit"><b>Submit</b></button>
             </div>
         </div>
     </div>
@@ -106,23 +172,34 @@
         &nbsp;
         &nbsp;
         <b>View By:</b>
-        <a href="#"><img class ="image" src="icons/gridview.png" alt=""/></a> | <a href="#"><img class ="image" src="icons/imageview.png" alt=""/></a>
+        <a class="disp_icon" href="#" onmouseover="m_d_tooltip(event,'GVT')" onmouseout="hide()">
+			<span id="GVT">Grid View</span>
+			<img class ="image" src="icons/gridview.png" alt=""/>
+		</a> | 
+		<a class="disp_icon" href="#" onmouseover="m_d_tooltip(event,'TVT')" onmouseout="hide()">
+			<span id="TVT">Thumb View</span>
+			<img class ="image" src="icons/imageview.png" alt=""/>
+		</a>
     </p>
 
     <div class="row">
 
-        <div class="col-sm-6 col-lg-3 col-md-4">
+        <div class="col-sm-6 col-md-4 col-lg-4">
             <div class="thumbnail">
 				<div class="t_c mb">
 					<div class="mask">
-						<a href="#"><img src="icons/download32.png" alt=""/></a>
-						<a href="#"><img src="icons/pencil32.png" alt=""/></a>
-						<a href="#"><img src="icons/block32.png" alt=""/></a>
+						<a href="#"><img src="icons/download32w.png" alt=""/></a>
+						<a href="#"><img src="icons/pencil32w.png" alt=""/></a>
+						<!-- possible change of anchor tag -->
+						<a onclick="confirm_delete()"><img src="icons/block32w.png" alt=""/></a>
 					</div>
-					<img src="http://i2.kym-cdn.com/photos/images/original/000/795/461/c87.jpg" alt="">
+					<img class ="img-thumb-nail" src="http://i2.kym-cdn.com/photos/images/original/000/795/461/c87.jpg" alt="">
 				</div>
                 <div class="caption">
-                    <h4><a href="#">First Meme</a> </h4>
+                    <h4><a href="#">First Meme</a></h4>
+                    <div class="comments">
+                        Some comments...
+                    </div>
                     <p class ="text-right ratings">
                         <span class="glyphicon glyphicon-star"></span>
                         <span class="glyphicon glyphicon-star"></span>
@@ -134,46 +211,55 @@
             </div>
         </div>
 
-        <div class="col-sm-6 col-lg-3 col-md-4">
+        <div class="col-sm-6 col-md-4 col-lg-4">
             <div class="thumbnail">
-                <img src="thumb.jpg" alt="">
+                <div class="t_c mb">
+                    <div class="mask" style="width:auto;">
+                        <a href="#"><img src="icons/download32w.png" alt=""/></a>
+                        <a href="#"><img src="icons/pencil32w.png" alt=""/></a>
+                        <a onclick="confirm_delete()"><img src="icons/block32w.png" alt=""/></a>
+                    </div>
+                    <img class ="img-thumb-nail" src="http://i2.kym-cdn.com/photos/images/original/000/795/461/c87.jpg" alt="">
+                </div>
+
                 <div class="caption">
-                    <h4><a href="#">Second Meme</a> </h4>
+                    <h4><a href="#">First Meme</a></h4>
+                    <div class="comments">
+                        Some comments...
+                    </div>
                     <p class ="text-right ratings">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
                     </p>
                 </div>
             </div>
         </div>
 
-
-        <div class="col-sm-6 col-lg-3 col-md-4">
+        <div class="col-sm-6 col-md-4 col-lg-4">
             <div class="thumbnail">
-                <img src="thumb.jpg" alt="">
-                <div class="caption">
-                    <h4><a href="#">Third Meme</a></h4>
-                    <p class ="text-right ratings">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                    </p>
+                <div class="t_c mb">
+                    <div class="mask">
+                        <a href="#"><img src="icons/download32w.png" alt=""/></a>
+                        <a href="#"><img src="icons/pencil32w.png" alt=""/></a>
+                        <a onclick="confirm_delete()"><img src="icons/block32w.png" alt=""/></a>
+                    </div>
+                    <img class ="img-thumb-nail" src="http://i2.kym-cdn.com/photos/images/original/000/795/461/c87.jpg" alt="">
                 </div>
-            </div>
-        </div>
 
-        <div class="col-sm-6 col-lg-3 col-md-4">
-            <div class="thumbnail">
-                <img src="thumb.jpg" alt="">
                 <div class="caption">
-                    <h4><a href="#">Fourth Meme</a></h4>
+                    <h4><a href="#">First Meme</a></h4>
+                    <div class="comments">
+                        Some comments...
+                    </div>
                     <p class ="text-right ratings">
-                       <button class="btn btn-default btn-xs">Rate It !!</button>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
                     </p>
                 </div>
             </div>
@@ -181,66 +267,130 @@
         
         <div class="col-sm-6 col-lg-3 col-md-4">
             <div class="thumbnail">
-                <img src="thumb.jpg" alt="">
+                <div class="t_c mb">
+                    <div class="mask">
+                        <a href="#"><img src="icons/download32w.png" alt=""/></a>
+                        <a href="#"><img src="icons/pencil32w.png" alt=""/></a>
+                        <a onclick="confirm_delete()"><img src="icons/block32w.png" alt=""/></a>
+                    </div>
+                    <img src="http://i2.kym-cdn.com/photos/images/original/000/795/461/c87.jpg" alt="">
+                </div>
+
                 <div class="caption">
-                    <h4><a href="#">First Meme</a> </h4>
+                    <h4><a href="#">First Meme</a></h4>
+                    <div class="comments">
+                        Some comments...
+                    </div>
                     <p class ="text-right ratings">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
+                       <button onclick="rate()" class="btn btn-default btn-xs rate">Rate It !!</button>
                     </p>
                 </div>
             </div>
         </div>
-
+        
         <div class="col-sm-6 col-lg-3 col-md-4">
             <div class="thumbnail">
-                <img src="thumb.jpg" alt="">
+                <div class="t_c mb">
+                    <div class="mask">
+                        <a href="#"><img src="icons/download32w.png" alt=""/></a>
+                        <a href="#"><img src="icons/pencil32w.png" alt=""/></a>
+                        <a onclick="confirm_delete()"><img src="icons/block32w.png" alt=""/></a>
+                    </div>
+                    <img src="http://i2.kym-cdn.com/photos/images/original/000/795/461/c87.jpg" alt="">
+                </div>
+
                 <div class="caption">
-                    <h4><a href="#">Second Meme</a> </h4>
+                    <h4><a href="#">First Meme</a></h4>
+                    <div class="comments">
+                        Some comments...
+                    </div>
                     <p class ="text-right ratings">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
                     </p>
                 </div>
             </div>
         </div>
-
-
+        
         <div class="col-sm-6 col-lg-3 col-md-4">
             <div class="thumbnail">
-                <img src="thumb.jpg" alt="">
+                <div class="t_c mb">
+                    <div class="mask">
+                        <a href="#"><img src="icons/download32w.png" alt=""/></a>
+                        <a href="#"><img src="icons/pencil32w.png" alt=""/></a>
+                        <a onclick="confirm_delete()"><img src="icons/block32w.png" alt=""/></a>
+                    </div>
+                    <img src="http://i2.kym-cdn.com/photos/images/original/000/795/461/c87.jpg" alt="">
+                </div>
+
                 <div class="caption">
-                    <h4><a href="#">Third Meme</a></h4>
+                    <h4><a href="#">First Meme</a></h4>
+                    <div class="comments">
+                        Some comments...
+                    </div>
                     <p class ="text-right ratings">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
                     </p>
                 </div>
             </div>
         </div>
-
+        
         <div class="col-sm-6 col-lg-3 col-md-4">
             <div class="thumbnail">
-                <img src="thumb.jpg" alt="">
+                <div class="t_c mb">
+                    <div class="mask">
+                        <a href="#"><img src="icons/download32w.png" alt=""/></a>
+                        <a href="#"><img src="icons/pencil32w.png" alt=""/></a>
+                        <a onclick="confirm_delete()"><img src="icons/block32w.png" alt=""/></a>
+                    </div>
+                    <img src="http://i2.kym-cdn.com/photos/images/original/000/795/461/c87.jpg" alt="">
+                </div>
+
                 <div class="caption">
-                    <h4><a href="#">Fourth Meme</a></h4>
+                    <h4><a href="#">First Meme</a></h4>
+                    <div class="comments">
+                        Some comments...
+                    </div>
                     <p class ="text-right ratings">
-                       <button class="btn btn-default btn-xs">Rate It !!</button>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
                     </p>
                 </div>
             </div>
         </div>
+        
+        <div class="col-sm-6 col-lg-3 col-md-4">
+            <div class="thumbnail">
+                <div class="t_c mb">
+                    <div class="mask">
+                        <a href="#"><img src="icons/download32w.png" alt=""/></a>
+                        <a href="#"><img src="icons/pencil32w.png" alt=""/></a>
+                        <a onclick="confirm_delete()"><img src="icons/block32w.png" alt=""></a>
+                    </div>
+                    <img src="http://i2.kym-cdn.com/photos/images/original/000/795/461/c87.jpg" alt="">
+                </div>
 
-
+                <div class="caption">
+                    <h4><a href="#">First Meme</a></h4>
+                    <div class="comments">
+                        Some comments...
+                    </div>
+                    <p class ="text-right ratings">
+                       <button onclick="rate()" class="btn btn-default btn-xs rate">Rate It !!</button>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -248,7 +398,7 @@
     <div class="navbar navbar-default navbar-fixed-bottom">
         <div class="container" id="footer">
             <div class="navbar-collapse collapse" id = "footnav">
-                <ul class="nav navbar-nav" id="footnav">
+                <ul class="nav navbar-nav">
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Contact Us</a></li>
                     <li><a href="#">Terms &amp; Conditions</a></li>

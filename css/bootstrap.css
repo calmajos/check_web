@@ -316,9 +316,6 @@ img {
   max-width: 100%;
   height: auto;
 }
-
-
-
 .img-rounded {
   border-radius: 6px;
 }
@@ -4403,7 +4400,6 @@ a.list-group-item.active > .badge,
   }
 }
 .thumbnail {
-  position: relative;
   display: block;
   padding: 4px;
   margin-bottom: 20px;
@@ -4418,7 +4414,6 @@ a.list-group-item.active > .badge,
 .thumbnail a > img {
   margin-right: auto;
   margin-left: auto;
-  z-index: 1;
 }
 a.thumbnail:hover,
 a.thumbnail:focus,
@@ -5787,6 +5782,4 @@ button.close {
     display: none !important;
   }
 }
-
-
 /*# sourceMappingURL=bootstrap.css.map */
